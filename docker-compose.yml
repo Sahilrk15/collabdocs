@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16
+    container_name: collabdocs_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # host port 5434 -> container 5432 (avoids clashing with a local Postgres on 5432)
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - collabdocs_pgdata:/var/lib/postgresql/data
+
+volumes:
+  collabdocs_pgdata:
